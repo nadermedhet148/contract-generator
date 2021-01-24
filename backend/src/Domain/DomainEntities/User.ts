@@ -7,11 +7,11 @@ export default class User {
 
     constructor(
         username : string,
-        userId : string,
+        userId : number,
         contracts : Contract[],
     ){
         this.username = username;
         this.contracts = contracts;
-        this.userId;
+        this.userId = userId;
     }
 }
