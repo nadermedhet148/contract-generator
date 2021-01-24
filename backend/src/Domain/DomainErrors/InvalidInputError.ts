@@ -4,6 +4,7 @@ export default class InvalidInputError {
     errors: {
       [key : string]: string[];
     };
+    code: number
   };
 
   constructor(
@@ -15,6 +16,7 @@ export default class InvalidInputError {
     this.error = {
       message,
       errors,
+      code : 400
     };
   }
 }

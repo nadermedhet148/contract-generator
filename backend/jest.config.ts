@@ -29,6 +29,9 @@ export default {
   // coveragePathIgnorePatterns: [
   //   "/node_modules/"
   // ],
+  "transform": {
+    "^.+\\.(ts|tsx)$": "ts-jest"
+  },
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
