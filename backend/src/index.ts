@@ -1,20 +1,57 @@
-import "reflect-metadata";
-import {createConnection} from "typeorm";
+ import * as express from 'express';
+ import * as cors from 'cors';
+ import * as bodyParser from 'body-parser';
+ import * as compression from 'compression';
+ import * as es from 'express-swagger-generator';
+ import * as  expressFileUpload from 'express-fileupload';
+import UserRoutes from './Infrastructure/HTTP/Routes/UserRoutes';
 
-createConnection().then(async connection => {
+ 
 
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
-    await connection.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
 
-    console.log("Loading users from the database...");
-    const users = await connection.manager.find(User);
-    console.log("Loaded users: ", users);
+ const compress = compression();
+ const app = express();
+ const expressSwagger = es(app);
 
-    console.log("Here you can setup and run express/koa/any other framework.");
+ 
+ const options = {
+   swaggerDefinition: {
+     basePath: '/',
+     produces: ['application/json'],
+     schemes: ['http'],
+   },
+   basedir: __dirname, // app absolute path
+   files: [
+     `/Infrastructure/HTTP/Routes/*.ts`,
 
-}).catch(error => console.log(error));
+   ], 
+ };
+ 
+ expressSwagger(options);
+ 
+ app.use(
+   bodyParser.urlencoded({
+     extended: false,
+   }),
+ );
+ app.use(
+   bodyParser.json({
+     limit: '5mb',
+   }),
+ );
+ app.use(compress);
+ app.use(cors());
+ app.use(expressFileUpload());
+ /**
+  * App routes definition
+  */
+ app.use('/users', UserRoutes());
+
+
+app.listen(process.env.APP_PORT || 3000, () => {
+    console.log('Server is up listening on port:', process.env.APP_PORT || 3000);
+});
+  
+
+ 
+ 

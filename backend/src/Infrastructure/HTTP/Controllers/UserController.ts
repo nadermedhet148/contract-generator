@@ -2,6 +2,7 @@ import { createConnection } from "typeorm";
 import UserService from "../../../Domain/Services/UserService";
 import { UserRepository } from "../../Database/Repositories/UserRepository";
 import ErrorHandler from "./Handlers/ErrorHandler";
+import SuccessHandler from "./Handlers/SuccessHandler";
 
 export default class UserController {
     constructor( ){
@@ -10,7 +11,7 @@ export default class UserController {
     async getUser(username: string) {
         try {
             const userService = new UserService(new UserRepository(await createConnection()))
-            return await userService.getUser(username)        
+            return SuccessHandler(await userService.getUser(username) )       
         } catch (e) {
             return ErrorHandler(e);
         }

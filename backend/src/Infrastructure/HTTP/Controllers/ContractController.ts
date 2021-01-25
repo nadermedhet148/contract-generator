@@ -4,6 +4,7 @@ import ContractService from "../../../Domain/Services/ContractSerivce";
 import ContractRepository from "../../Database/Repositories/ContractRepository";
 import LocalStorage from "../../FileStorage/LocalStorage";
 import ErrorHandler from "./Handlers/ErrorHandler";
+import SuccessHandler from "./Handlers/SuccessHandler";
 
 export default class ContractController {
   constructor() {}
@@ -15,7 +16,7 @@ export default class ContractController {
         new PdfManger(),
         new LocalStorage()
       );
-      return await contractService.getContract(uniqueIdentifer);
+      return SuccessHandler(await contractService.getContract(uniqueIdentifer));
     } catch (e) {
       return ErrorHandler(e);
     }
@@ -36,15 +37,17 @@ export default class ContractController {
         new PdfManger(),
         new LocalStorage()
       );
-      return await contractService.createContract({
-        name,
-        phone,
-        email,
-        address,
-        rentAmount,
-        userId,
-        pdfBuffer,
-      });
+      return SuccessHandler(
+        await contractService.createContract({
+          name,
+          phone,
+          email,
+          address,
+          rentAmount,
+          userId,
+          pdfBuffer,
+        })
+      );
     } catch (e) {
       return ErrorHandler(e);
     }
