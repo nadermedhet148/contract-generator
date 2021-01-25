@@ -1,5 +1,5 @@
 export default interface IStorageManger {
-    readFile(location : string) : Promise<Buffer>;
-    writeFile(file : Buffer,location : string) : Promise<Boolean>;
+    readFile(name : string) : Promise<Buffer>;
+    writeFile(file : Buffer,name : string) : Promise<string>;
 
 }

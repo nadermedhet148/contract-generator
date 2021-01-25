@@ -5,7 +5,6 @@ export default class PdfManger {
     pageData: {
       name: string;
       phone: string;
-      number: string;
       email: string;
       address: string;
       rentAmount: number;

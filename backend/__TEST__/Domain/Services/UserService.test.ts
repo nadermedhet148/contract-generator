@@ -14,7 +14,7 @@ describe("UserService", () => {
   });
 
   describe("createUser", () => {
-    it("should throw invalid input error when username is empty", async () => {
+    it("should throw InvalidInputError when username is empty", async () => {
       try {
         await userService.getUser(null);
       } catch (e) {
