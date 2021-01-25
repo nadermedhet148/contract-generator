@@ -2,6 +2,7 @@ import DomainContract from "../../../Domain/DomainEntities/Contract";
 import IContractRepository from "../../../Domain/Interfaces/Repositories/IContractRepository";
 import { Connection } from "typeorm";
 import Contract from "../Entities/Contract";
+import User from "../Entities/User";
 
 export default class ContractRepository implements IContractRepository {
   constructor(private connection: Connection) {}
@@ -15,6 +16,8 @@ export default class ContractRepository implements IContractRepository {
     dbContract.phone = contract.phone;
     dbContract.rentAmount = contract.rentAmount;
     dbContract.uniqueIdentifer = contract.uniqueIdentifer;
+    const user =  await this.connection.manager.findOne(User, contract.userId); 
+    dbContract.user = user ;
 
     await this.connection.manager.save(dbContract);
 
@@ -26,7 +29,7 @@ export default class ContractRepository implements IContractRepository {
     const contract = await this.connection.manager.findOne(Contract, {
       where: {
         uniqueIdentifer: uniqueIdentifer,
-      },
+      }
     });
 
     if (!contract) return null;

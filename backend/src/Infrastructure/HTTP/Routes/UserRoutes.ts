@@ -40,7 +40,7 @@ export default () => {
    * @returns {Error}  default - Server error
    * @returns {Error}  400 - {error : { type : message }}
    */
-  router.get("/", async (req: express.Request, res: express.Response) => {
+  router.get("/:username", async (req: express.Request, res: express.Response) => {
     const result = await userController.getUser(req.params.username);
     res.status(result.code).json(result.data);
   });

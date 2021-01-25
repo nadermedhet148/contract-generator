@@ -33,7 +33,7 @@ export default () => {
    * @returns {Error}  default - Server error
    * @returns {Error}  400 - {error : { type : message }}
    */
-  router.get("/", async (req: express.Request, res: express.Response) => {
+  router.get("/:uniqueIdentifer", async (req: express.Request, res: express.Response) => {
     const result = await contractController.getContract(req.params.uniqueIdentifer);
     res.status(result.code).json(result.data);
   });
@@ -51,20 +51,22 @@ export default () => {
    * @param {string} address.body,
    * @param {number} rentAmount.body,
    * @param {number} userId.headers,
-   * @param {File} pdfBuffer.body
+   * @param {file} pdf.body
    * @returns {contractResponse.model} - 200
    * @returns {Error}  default - Server error
    * @returns {Error}  400 - {error : { type : message }}
    */
   router.post("/", async (req: express.Request, res: express.Response) => {
+    
+  
     const result = await contractController.createContract(
         req.body.name,
         req.body.phone,
         req.body.email,
         req.body.address,
         req.body.rentAmount,
-        req.body.userId,
-        req.body.pdfBuffer
+        req.get('userId') as any,
+        (req as any).files.pdf?.data
     );
     res.status(result.code).json(result.data);
   });

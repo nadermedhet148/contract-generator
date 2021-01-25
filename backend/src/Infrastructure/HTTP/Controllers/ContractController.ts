@@ -1,6 +1,7 @@
-import { createConnection } from "typeorm";
+import { createConnection, getConnection } from "typeorm";
 import PdfManger from "../../../Domain/Helpers/PdfManger";
 import ContractService from "../../../Domain/Services/ContractSerivce";
+import { establishConnection } from "../../Database/connection/GetConnection";
 import ContractRepository from "../../Database/Repositories/ContractRepository";
 import LocalStorage from "../../FileStorage/LocalStorage";
 import ErrorHandler from "./Handlers/ErrorHandler";
@@ -12,7 +13,7 @@ export default class ContractController {
   async getContract(uniqueIdentifer: string) {
     try {
       const contractService = new ContractService(
-        new ContractRepository(await createConnection()),
+        new ContractRepository(getConnection('default')),
         new PdfManger(),
         new LocalStorage()
       );
@@ -33,7 +34,7 @@ export default class ContractController {
   ) {
     try {
       const contractService = new ContractService(
-        new ContractRepository(await createConnection()),
+        new ContractRepository(getConnection('default')),
         new PdfManger(),
         new LocalStorage()
       );

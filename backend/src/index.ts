@@ -5,6 +5,8 @@
  import * as es from 'express-swagger-generator';
  import * as  expressFileUpload from 'express-fileupload';
 import UserRoutes from './Infrastructure/HTTP/Routes/UserRoutes';
+import ContractRoutes from './Infrastructure/HTTP/Routes/ContractRoutes';
+import { establishConnection } from './Infrastructure/Database/connection/GetConnection';
 
  
 
@@ -22,7 +24,7 @@ import UserRoutes from './Infrastructure/HTTP/Routes/UserRoutes';
    },
    basedir: __dirname, // app absolute path
    files: [
-     `/Infrastructure/HTTP/Routes/*.ts`,
+     `${__dirname}/Infrastructure/HTTP/Routes/*.ts`,
 
    ], 
  };
@@ -46,10 +48,12 @@ import UserRoutes from './Infrastructure/HTTP/Routes/UserRoutes';
   * App routes definition
   */
  app.use('/users', UserRoutes());
+ app.use('/contracts', ContractRoutes());
 
 
-app.listen(process.env.APP_PORT || 3000, () => {
+app.listen(process.env.APP_PORT || 3000, async () => {
     console.log('Server is up listening on port:', process.env.APP_PORT || 3000);
+    await establishConnection()
 });
   
 
