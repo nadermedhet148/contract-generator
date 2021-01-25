@@ -7,7 +7,7 @@ import { UserRepository } from "../../../src/Infrastructure/Database/Repositorie
 jest.mock("../../../src/Infrastructure/Database/Repositories/UserRepository");
 
 describe("UserService", () => {
-  const userRepository: jest.Mocked<UserRepository> = new UserRepository() as jest.Mocked<UserRepository>;
+  const userRepository: jest.Mocked<UserRepository> = new UserRepository(null) as jest.Mocked<UserRepository>;
   let userService: UserService;
   beforeEach(() => {
     userService = new UserService(userRepository);
