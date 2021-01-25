@@ -13,28 +13,28 @@ export default class Contract {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "string" })
+  @Column({ type: "varchar" })
   pdfTemplateUrl: string;
 
-  @Column({ type: "string" })
+  @Column({ type: "varchar" })
   name: string;
 
-  @Column({ type: "string" })
+  @Column({ type: "varchar" })
   phone: string;
 
-  @Column({ type: "string" })
+  @Column({ type: "varchar" })
   uniqueIdentifer: string;
 
-  @Column({ type: "string" })
+  @Column({ type: "varchar" })
   email: string;
 
-  @Column({ type: "string" })
+  @Column({ type: "varchar" })
   address: string;
 
   @Column({ type: "decimal" })
   rentAmount: number;
 
-  @Column({ type: "bigint", nullable: false, name: "offer_id" })
+  @Column({ type: "bigint", nullable: true, name: "user_id" })
   @ManyToOne(() => User, (user) => user.contracts)
   @JoinColumn({ name: "user_id" })
   user: User;

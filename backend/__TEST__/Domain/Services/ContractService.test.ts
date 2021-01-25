@@ -14,7 +14,7 @@ jest.mock("../../../src/Domain/Helpers/PdfManger");
 jest.mock("../../../src/Infrastructure/FileStorage/LocalStorage");
 
 describe("ContractService", () => {
-  const contractRepository: jest.Mocked<ContractRepository> = new ContractRepository() as jest.Mocked<ContractRepository>;
+  const contractRepository: jest.Mocked<ContractRepository> = new ContractRepository(null) as jest.Mocked<ContractRepository>;
   const pdfManger: jest.Mocked<PdfManger> = new PdfManger() as jest.Mocked<PdfManger>;
   const storageManger: jest.Mocked<LocalStorage> = new LocalStorage() as jest.Mocked<LocalStorage>;
 

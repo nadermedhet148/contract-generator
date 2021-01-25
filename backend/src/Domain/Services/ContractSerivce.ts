@@ -65,7 +65,7 @@ export default class ContractService {
       address: input.address,
       rentAmount: input.rentAmount,
     });
-    const uniqueIdentifer = "";
+    const uniqueIdentifer = Math.random().toString(36).substring(2);
     const contractPdfUrl = await this.storageManger.writeFile(
       contractPdf,
       uniqueIdentifer

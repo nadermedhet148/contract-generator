@@ -17,7 +17,7 @@ export default class Contract {
     address: string;
     rentAmount: number;
     contractId?: number;
-    userId: number;
+    userId?: number;
     uniqueIdentifer: string;
   }) {
     this.pdfTemplateUrl = data.pdfTemplateUrl;

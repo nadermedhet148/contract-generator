@@ -11,10 +11,7 @@ import Contract from './Contract';
     @PrimaryGeneratedColumn()
     id: number;
   
-
-  
-  
-    @Column({ type: 'string' })
+    @Column({ type: 'varchar' })
     username;
   
     @OneToMany(
