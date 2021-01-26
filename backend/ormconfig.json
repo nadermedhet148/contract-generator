@@ -1,7 +1,10 @@
 {
-   "database": ":memory:",
-   "type": "sqlite",
-   "name": "default",
+   "host": "mysql",
+   "port": 3306,
+   "username": "root",
+   "password": "password",
+   "database": "db",
+   "type": "mysql",
    "synchronize": true,
    "logging": true,
    "entities": [

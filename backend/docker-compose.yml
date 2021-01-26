@@ -1,0 +1,38 @@
+version: "3"
+services:
+  wait:
+    image: dokku/wait
+  contract-service:
+    container_name: contract-service
+    image: contract-service:latest
+    depends_on:
+      - mysql
+    ports:
+      - "3000:3000"
+    links:
+      - mysql
+    networks:
+      - app-network
+    expose:
+      - "3306"
+      - "7706"
+  mysql:
+    image: mysql:8.0.23
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '7706:3306'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - app-network
+volumes:
+  my-db:
+networks:
+  app-network:
+    driver: bridge
