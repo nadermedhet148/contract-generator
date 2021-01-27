@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect  } from 'react';
 import { Link } from 'react-router-dom'
+import {  useSelector } from 'react-redux';
 
 
+const Home =  () => {
 
-export default () => {
-    const booksList: any[] = [];
+    const user = useSelector(
+        (state) => state.users.user
+      );
+      useEffect(() => {
+        console.log(user);
+      }, [user]);
 
     return (
         <div className="main-wrap">
@@ -17,19 +23,20 @@ export default () => {
                     <p>" Gabriel.s small cottage was lit by a single candle that cast light on a collection of weapons along one wall and a few books on a bookshelf on another "</p>
                 </div>
 
+                <Link to='/contract/create'>
+                        add
+                </Link>
             </div>
             <h2 className="cards-title">Favourite</h2>
             {
-                booksList.map((item, index) => {
+                user?.contracts.map((item, index) => {
                     return (
                         <div className="card" key={index} >
                             <div className="overlay">
-                                <img src={item.metadata.hero.url} alt="" />
+                                <p>{item.name}</p>
                                 <div className="strip">
                                     <div className="like-menu">
-                                        <ul className="position">
-                                            <li> <a href={`https://twitter.com/intent/tweet?text=${item.slug}/${item.created}/${item.metadata.author.slug}`}><i className="fa fa-share-square-o fa-2x" aria-hidden="true"></i></a></li>
-                                        </ul>
+                                  
                                     </div>
                                 </div>
                             </div>
@@ -44,3 +51,5 @@ export default () => {
     )
 }
 
+
+export default Home;

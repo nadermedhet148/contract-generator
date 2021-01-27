@@ -23,7 +23,7 @@ ReactDOM.render(
       <Router  >
       <div>
         <Switch>
-          <Route path="/login">
+          <Route path="/">
             <Login />
           </Route>
         </Switch>

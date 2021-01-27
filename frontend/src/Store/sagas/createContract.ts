@@ -12,7 +12,7 @@ function* createContract(action) {
 
   try {
     const contract = yield call(PostService, CREATE_CONTRACT_API, form , {
-      userId : action.payload.user?.id
+      userId : action.payload.user?.userId,
     });
 
     yield put({
