@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
-import {Add} from "@material-ui/icons";
+import { Add } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { Fab } from "@material-ui/core";
 
-const Pdf = ({ setPdf, navigation } : any) => {
-  const handelChange = (e)=>{
-    setPdf(e.target.files[0])
+const Pdf = ({ setPdf, navigation, pdf }: any) => {
+  const [pdfError, setPdfError] = useState(false);
+
+  const handelChange = (e) => {
+    console.log(e.target.files[0]);
+    if (e.target.files[0].type !== "application/pdf") {
+      setPdfError(true)
+    } else {
+      setPdfError(false)
+      setPdf(e.target.files[0])
+    }
+
   }
   return (
     <Container maxWidth="xs">
@@ -17,7 +26,7 @@ const Pdf = ({ setPdf, navigation } : any) => {
           id="upload-photo"
           name="pdf"
           type="file"
-          onChange= {handelChange}
+          onChange={handelChange}
         />
 
         <Fab
@@ -34,6 +43,7 @@ const Pdf = ({ setPdf, navigation } : any) => {
 
 
       </label>
+      <p>{pdfError ? 'you should upload a valid pdf' : ''}</p>
       <div style={{ marginTop: "1rem" }}>
         <Button
           color="secondary"
@@ -46,6 +56,7 @@ const Pdf = ({ setPdf, navigation } : any) => {
         <Button
           color="primary"
           variant="contained"
+          disabled={!(!!pdf)}
           onClick={() => navigation.next()}
         >
           Next

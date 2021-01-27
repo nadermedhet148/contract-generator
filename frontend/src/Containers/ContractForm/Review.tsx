@@ -42,7 +42,7 @@ export const Review = ({ formData, pdf, navigation }: any) => {
   return (
     <Container maxWidth='sm'>
       <h3>Review</h3>
-      <RenderAccordion summary="Contract info" go={go} details={[
+      <RenderAccordion summary="contractData" go={go} details={[
         { 'Name': name },
         { 'Phone': phone },
         { 'Email': email },
@@ -80,7 +80,7 @@ export const RenderAccordion = ({ summary, details, go }) => (
         <IconButton
           color="primary"
           component="span"
-          onClick={() => go(`${summary.toLowerCase()}`)}
+          onClick={() => go(summary)}
         ><EditIcon /></IconButton>
       </div>
     </AccordionDetail>
