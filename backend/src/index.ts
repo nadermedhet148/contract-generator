@@ -44,6 +44,10 @@ import { establishConnection } from './Infrastructure/Database/connection/GetCon
  app.use(compress);
  app.use(cors());
  app.use(expressFileUpload());
+ app.use('/uploads/*' , (req , res)=>{
+   res.sendFile(__dirname +req.baseUrl)
+ })
+
  /**
   * App routes definition
   */

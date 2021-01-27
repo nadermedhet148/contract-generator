@@ -2,6 +2,6 @@
 export default (data ) => {
     return {
         data: data,
-        code:400,
+        code:200,
     }
 }

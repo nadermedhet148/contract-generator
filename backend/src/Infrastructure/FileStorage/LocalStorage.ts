@@ -3,8 +3,7 @@ import IStorageManger from "../../Domain/Interfaces/Storage/IStorageManger";
 
 export default class LocalStorage implements IStorageManger {
   async writeFile(file: Buffer, name: string): Promise<string> {
-    const location = `uploads/${name}.pdf`;
-    writeFile(location, file, (result) => {});
-    return location;
+    writeFile(`src/uploads/${name}.pdf`, file, (result) => {});
+    return `uploads/${name}.pdf`;
   }
 }
