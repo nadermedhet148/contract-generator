@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export default (props) => {
   const classes = useStyles();
   const [username , setUsername] = useState('');
+  const [usernameError , setUsernameError] = useState('');
+
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -50,10 +52,14 @@ export default (props) => {
   useEffect(() => {
     if(user) history.push('/home');
 
-  }, [user]);
+  }, [user ,history]);
 
 
   const handleLogin = () => {
+    if(!username ) return setUsernameError('Username is required');
+    if(username.length < 4 ) return setUsernameError('Username should be more than 4 characters');
+    
+    setUsernameError('');
     dispatch(getUser(username));
   };
 
@@ -71,7 +77,8 @@ export default (props) => {
         <CardContent>
           <div>
             <TextField
-              // error={state.isError}
+              error={!!usernameError}
+              helperText={usernameError}
               fullWidth
               id="username"
               type="email"
