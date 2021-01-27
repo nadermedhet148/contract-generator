@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import React, { useEffect, useState  } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
@@ -13,13 +13,16 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import { getUser } from '../../Store/actions';
 
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      width: 400,
-      margin: `${theme.spacing(0)} auto`
+      position: 'relative',
+      maxWidth: '350px',
+      backgroundColor: '#008bff',
+      width: '94%',
+      margin: '0 auto',
+      color: '#fff'
     },
     loginBtn: {
       marginTop: theme.spacing(2),
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       textAlign: 'center',
-      background: '#212121',
+      background: '#008bff',
       color: '#fff'
     },
     card: {
@@ -40,8 +43,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default (props) => {
   const classes = useStyles();
-  const [username , setUsername] = useState('');
-  const [usernameError , setUsernameError] = useState('');
+  const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
 
   const dispatch = useDispatch();
   let history = useHistory();
@@ -50,14 +53,16 @@ export default (props) => {
     (state) => state.users.user
   );
   useEffect(() => {
-    if(user) history.push('/home');
+    if (user) history.push('/home');
 
-  }, [user ,history]);
+  }, [user, history]);
 
 
-  const handleLogin = () => {
-    if(!username ) return setUsernameError('Username is required');
-    if(username.length < 4 ) return setUsernameError('Username should be more than 4 characters');
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    if (!username) return setUsernameError('Username is required');
+    if (username.length < 4) return setUsernameError('Username should be more than 4 characters');
     
     setUsernameError('');
     dispatch(getUser(username));
@@ -73,8 +78,11 @@ export default (props) => {
   return (
     <form className={classes.container} noValidate onSubmit={handleLogin} autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Login App" />
+        <CardHeader className={classes.header} title="Authentication required" />
         <CardContent>
+          <p>
+            For your security, we need to authenticate your request. Please enter your name below.
+          </p>
           <div>
             <TextField
               error={!!usernameError}
@@ -93,10 +101,12 @@ export default (props) => {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
-            className={classes.loginBtn}
+            style={{
+              backgroundColor: "#008bff",
+              color: "#fff",
+            }} className={classes.loginBtn}
             onClick={handleLogin}
-            >
+          >
             Login
           </Button>
         </CardActions>
