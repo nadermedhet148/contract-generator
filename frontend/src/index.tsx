@@ -13,39 +13,64 @@ import ContractForm from './Containers/ContractForm';
 import Store from './Store'
 import { Provider } from 'react-redux'
 import ViewContract from './Containers/ViewContract';
+import { useSelector } from 'react-redux';
 
 
-const store = Store()
+const store = Store();
+
+
+function AdminGuardedRoute() {
+  const user = useSelector(
+    (state) => state.users.user
+  );
+  return function ({ component: Component, ...rest }) {
+    return (
+      <Route
+        {...rest}
+        render={props => (!!user ? <Component {...props} /> : <Login />)}
+      />
+    );
+  };
+}
+
+const APP = () => {
+
+
+  const AdminRoute = AdminGuardedRoute();
+
+  return (
+    <React.StrictMode>
+      <Router  >
+        <div>
+          <Switch>
+            <Route exact path="/">
+              <Login />
+            </Route>
+          </Switch>
+          <Switch>
+            <AdminRoute path="/home" exact component={Home} />
+          </Switch>
+          <Switch>
+            <AdminRoute path="/contract/create" exact component={ContractForm} />
+          </Switch>
+          <Switch>
+            <Route path="/contract/view/:id">
+              <ViewContract />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </React.StrictMode>
+  )
+}
+
 
 ReactDOM.render(
   <Provider store={store}>
-  <React.StrictMode>
-      <Router  >
-      <div>
-        <Switch>
-          <Route path="/">
-            <Login />
-          </Route>
-        </Switch>
-        <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-        </Switch>
-        <Switch>
-          <Route path="/contract/create">
-            <ContractForm />
-          </Route>
-        </Switch>
-        <Switch>
-          <Route path="/contract/view/:id">
-            <ViewContract />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  </React.StrictMode>
-  </Provider>,
+    <APP />
+  </Provider>
+
+  ,
   document.getElementById('root')
 );
 

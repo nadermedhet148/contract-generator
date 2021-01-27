@@ -71,7 +71,7 @@ export default (props) => {
     };
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
+    <form className={classes.container} noValidate onSubmit={handleLogin} autoComplete="off">
       <Card className={classes.card}>
         <CardHeader className={classes.header} title="Login App" />
         <CardContent>
