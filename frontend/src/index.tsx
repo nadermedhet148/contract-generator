@@ -42,7 +42,7 @@ const APP = () => {
   return (
     <React.StrictMode>
       <Router  >
-        <div>
+        <div style={{height:'100%'}}>
           <Switch>
             <Route exact path="/">
               <Login />
