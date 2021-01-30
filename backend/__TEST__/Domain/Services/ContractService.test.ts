@@ -1,6 +1,7 @@
 import { describe, expect } from "@jest/globals";
 import Contract from "../../../src/Domain/DomainEntities/Contract";
 import ContractNotFoundError from "../../../src/Domain/DomainErrors/ContractNotFoundError";
+import FileShouldBePdfError from "../../../src/Domain/DomainErrors/FileShouldBePdfError";
 import InvalidInputError from "../../../src/Domain/DomainErrors/InvalidInputError";
 import PdfManger from "../../../src/Domain/Helpers/PdfManger";
 import ContractService from "../../../src/Domain/Services/ContractSerivce";
@@ -14,7 +15,9 @@ jest.mock("../../../src/Domain/Helpers/PdfManger");
 jest.mock("../../../src/Infrastructure/FileStorage/LocalStorage");
 
 describe("ContractService", () => {
-  const contractRepository: jest.Mocked<ContractRepository> = new ContractRepository(null) as jest.Mocked<ContractRepository>;
+  const contractRepository: jest.Mocked<ContractRepository> = new ContractRepository(
+    null
+  ) as jest.Mocked<ContractRepository>;
   const pdfManger: jest.Mocked<PdfManger> = new PdfManger() as jest.Mocked<PdfManger>;
   const storageManger: jest.Mocked<LocalStorage> = new LocalStorage() as jest.Mocked<LocalStorage>;
 
@@ -66,7 +69,8 @@ describe("ContractService", () => {
           address: "test",
           rentAmount: 1,
           userId: 1,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
@@ -82,7 +86,8 @@ describe("ContractService", () => {
           address: "test",
           rentAmount: 1,
           userId: 1,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
@@ -98,7 +103,8 @@ describe("ContractService", () => {
           address: "test",
           rentAmount: 1,
           userId: 1,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
@@ -114,7 +120,8 @@ describe("ContractService", () => {
           address: null,
           rentAmount: 1,
           userId: 1,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
@@ -130,7 +137,8 @@ describe("ContractService", () => {
           address: "test",
           rentAmount: null,
           userId: 1,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
@@ -146,7 +154,8 @@ describe("ContractService", () => {
           address: "test",
           rentAmount: -2,
           userId: 1,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
@@ -162,12 +171,31 @@ describe("ContractService", () => {
           address: "test",
           rentAmount: 1,
           userId: null,
-          pdfBuffer: null,
+          buffer: null,
+          fileType: "",
         });
       } catch (e) {
         expect(e).toBeInstanceOf(InvalidInputError);
         expect(e.error.errors).toHaveProperty("userId");
       }
+    });
+    it("should throw FileShouldBePdfError if buffer not a pdf ", async () => {
+      try{
+        const contract = await contractService.createContract({
+          name: "test",
+          phone: "test",
+          email: "test",
+          address: "test",
+          rentAmount: 1,
+          userId: 1,
+          buffer: null,
+          fileType: "test",
+        });
+      }catch (e) {
+        expect(e).toBeInstanceOf(FileShouldBePdfError);
+      }
+
+
     });
     it("should create contract and generate the pdf", async () => {
       contractRepository.createContract.mockReturnValue(
@@ -196,7 +224,8 @@ describe("ContractService", () => {
         address: "test",
         rentAmount: 1,
         userId: 1,
-        pdfBuffer: null,
+        buffer: null,
+        fileType: "application/pdf",
       });
       expect(contract).toBeInstanceOf(Contract);
       expect(contractRepository.createContract).toBeCalled();

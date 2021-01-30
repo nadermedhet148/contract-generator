@@ -30,7 +30,8 @@ export default class ContractController {
     address: string,
     rentAmount: number,
     userId: number,
-    pdfBuffer: Buffer
+    buffer: Buffer, 
+    type,
   ) {
     try {
       const contractService = new ContractService(
@@ -46,7 +47,8 @@ export default class ContractController {
           address,
           rentAmount,
           userId,
-          pdfBuffer,
+          buffer ,
+          fileType : type
         })
       );
     } catch (e) {

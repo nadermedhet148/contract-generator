@@ -58,7 +58,6 @@ export default () => {
    */
   router.post("/", async (req: express.Request, res: express.Response) => {
     
-  
     const result = await contractController.createContract(
         req.body.name,
         req.body.phone,
@@ -66,7 +65,8 @@ export default () => {
         req.body.address,
         req.body.rentAmount,
         req.get('userId') as any,
-        (req as any).files.pdf?.data
+        (req as any).files.pdf?.data,
+        (req as any).files.pdf.mimetype,
     );
     res.status(result.code).json(result.data);
   });

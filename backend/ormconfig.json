@@ -1,11 +1,8 @@
 {
-   "host": "mysql",
-   "port": 3306,
-   "username": "root",
-   "password": "password",
-   "database": "db",
-   "type": "mysql",
+   "database": ":memory:",
    "synchronize": true,
+   "type": "sqlite",
+   "name": "default",
    "logging": true,
    "entities": [
       "src/Infrastructure/Database/Entities/**/*.ts"

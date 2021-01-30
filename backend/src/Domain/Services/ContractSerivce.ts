@@ -5,6 +5,7 @@ import IContractRepository from "../Interfaces/Repositories/IContractRepository"
 import IStorageManger from "../Interfaces/Storage/IStorageManger";
 import * as validate from "validate.js";
 import InvalidInputError from "../DomainErrors/InvalidInputError";
+import FileShouldBePdfError from "../DomainErrors/FileShouldBePdfError";
 
 export default class ContractService {
   constructor(
@@ -20,7 +21,8 @@ export default class ContractService {
     address: string;
     rentAmount: number;
     userId: number;
-    pdfBuffer: Buffer;
+    buffer: Buffer;
+    fileType : string;
   }): Promise<Contract> {
     const errors = validate(
       {
@@ -58,7 +60,10 @@ export default class ContractService {
     if (errors) {
       throw new InvalidInputError("your contract data is invalid", errors);
     }
-    const contractPdf = await this.pdfManger.generateContract(input.pdfBuffer, {
+    if(input.fileType !== 'application/pdf'){
+      throw new FileShouldBePdfError();
+    }
+    const contractPdf = await this.pdfManger.generateContract(input.buffer, {
       name: input.name,
       phone: input.phone,
       email: input.email,
