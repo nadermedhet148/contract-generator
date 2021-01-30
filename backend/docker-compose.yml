@@ -4,7 +4,7 @@ services:
     image: dokku/wait
   contract-service:
     container_name: contract-service
-    image: contract-service:latest
+    build: .
     depends_on:
       - mysql
     ports:
