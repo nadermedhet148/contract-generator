@@ -43,6 +43,7 @@ const APP = () => {
     <React.StrictMode>
       <Router  >
         <div style={{height:'100%'}}>
+        {/* <ReactLoading type={'bubbles'} color={'#000'} height={667} width={375} /> */}
           <Switch>
             <Route exact path="/">
               <Login />

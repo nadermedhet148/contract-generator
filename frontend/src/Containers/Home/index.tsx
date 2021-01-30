@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
             minHeight: '90%',
             position: 'relative',
             width: '90%',
-            margin: '0 auto',
+            margin: '25px auto',
             padding: '15px',
             background: '#f2f2f2',
             boxShadow: '4px 4px 20px 2px #00000026',
