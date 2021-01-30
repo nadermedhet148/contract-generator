@@ -19,10 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       position: 'relative',
       maxWidth: '350px',
-      backgroundColor: '#008bff',
       width: '94%',
       margin: '0 auto',
-      color: '#fff'
+      color: '#fff',
+      justifyContent: 'center',
+      height: '100%',
+      alignItems: 'center',
+      display: 'flex'
     },
     loginBtn: {
       marginTop: theme.spacing(2),
@@ -32,9 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       background: '#008bff',
       color: '#fff'
-    },
-    card: {
-      marginTop: theme.spacing(10)
     }
   })
 );
@@ -63,7 +63,7 @@ export default (props) => {
 
     if (!username) return setUsernameError('Username is required');
     if (username.length < 4) return setUsernameError('Username should be more than 4 characters');
-    
+
     setUsernameError('');
     dispatch(getUser(username));
   };
@@ -77,7 +77,7 @@ export default (props) => {
 
   return (
     <form className={classes.container} noValidate onSubmit={handleLogin} autoComplete="off">
-      <Card className={classes.card}>
+      <Card >
         <CardHeader className={classes.header} title="Authentication required" />
         <CardContent>
           <p>
@@ -104,7 +104,8 @@ export default (props) => {
             style={{
               backgroundColor: "#008bff",
               color: "#fff",
-            }} className={classes.loginBtn}
+            }}
+            className={classes.loginBtn}
             onClick={handleLogin}
           >
             Login

@@ -8,6 +8,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useHistory } from "react-router-dom";
+import { Add } from "@material-ui/icons";
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
@@ -17,14 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
             minHeight: '90%',
             position: 'relative',
             width: '90%',
-            margin: '25px auto',
+            margin: '0 auto',
             padding: '15px',
             background: '#f2f2f2',
             boxShadow: '4px 4px 20px 2px #00000026',
-        },
-        loginBtn: {
-            marginTop: theme.spacing(2),
-            flexGrow: 1
         },
         header: {
             textAlign: 'center',
@@ -42,6 +39,22 @@ const useStyles = makeStyles((theme: Theme) =>
             rowGap: '1em',
             columnGap: '20px',
             justifyContent: 'center'
+        },
+        button : {
+            backgroundColor: "#008bff",
+            color: "#fff",
+            margin: '10px auto',
+            flexGrow: 1,
+            display: 'flex',
+            width: '60px',
+            height: '60px',
+            borderRadius: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position:'fixed',
+            bottom:'20px',
+            right:'40px',
+            boxShadow: '2px 2px 3px #999',
         }
     })
 );
@@ -58,13 +71,16 @@ const Home = () => {
 
     return (
         <div className={classes.container} >
-            <h1>Your already submitted contracts</h1>
+            <h1 style={{
+                textAlign: 'center',
+                color: 'rgb(0, 139, 255)',
+            }} >Your already submitted contracts</h1>
 
             <div className={classes.cards}>
                 {
                     user?.contracts.length > 0 ? user?.contracts.map((item, index) => {
                         return (
-                            <Card key={item.name} className={classes.card}>
+                            <Card key={item.contractId} className={classes.card}>
                                 <CardHeader className={classes.header} title={item.name} />
                                 <CardContent>
 
@@ -76,14 +92,14 @@ const Home = () => {
 
                                 </CardContent>
                                 <CardActions style={{
-                                        justifyContent: 'center',
+                                    justifyContent: 'center',
 
                                 }} >
                                     <Link style={{
-                                        color : "#008bff"
+                                        color: "#008bff"
                                     }} to={'/contract/view/' + item.uniqueIdentifer}>
-                                        <VisibilityIcon/>
-                                </Link>
+                                        <VisibilityIcon />
+                                    </Link>
                                 </CardActions>
                             </Card>
 
@@ -97,16 +113,12 @@ const Home = () => {
             <Button
                 variant="contained"
                 size="large"
-                style={{
-                    backgroundColor: "#008bff",
-                    color: "#fff",
-                    margin: '10px auto',
-                    display: 'block',
-                
-                }} className={classes.loginBtn}
-            onClick={()=>{history.push('/contract/create')}}
+                className={classes.button}
+                onClick={() => { history.push('/contract/create') }}
             >
-                Add new contract
+                <Add style={{
+                    fontSize: '35px'
+                }} />
           </Button>
 
         </div>

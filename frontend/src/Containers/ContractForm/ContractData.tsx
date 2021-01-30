@@ -43,7 +43,7 @@ const ContractData = ({ formData, setForm, navigation }) => {
     else if (isNaN(phone)) {
       hasError = true;
       setPhoneError('Phone should be contained only number');
-    } 
+    }
     else {
       setPhoneError('')
     }
@@ -68,11 +68,11 @@ const ContractData = ({ formData, setForm, navigation }) => {
       hasError = true;
       setRentAmountError('Rent Amount is required');
     }
-    else if (isNaN(rentAmount)){
+    else if (isNaN(rentAmount)) {
       hasError = true;
       setRentAmountError('Rent Amount should be contained only number');
     }
-    else{
+    else {
       setRentAmountError('')
     }
 
@@ -83,7 +83,11 @@ const ContractData = ({ formData, setForm, navigation }) => {
 
   return (
     <Container maxWidth="xs">
-      <h3>Contract Info</h3>
+      <h2 style={{
+        textAlign: 'center',
+        color: 'rgb(0, 139, 255)',
+      }}
+      >Contract Info</h2>
       <TextField
         error={!!nameError}
         helperText={nameError}
@@ -148,7 +152,11 @@ const ContractData = ({ formData, setForm, navigation }) => {
         variant="contained"
         fullWidth
         color="primary"
-        style={{ marginTop: "1rem" }}
+        style={{
+          backgroundColor: "#008bff",
+          color: "#fff",
+          marginTop: "1rem"
+        }}
         onClick={handelNext}
       >
         Next

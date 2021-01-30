@@ -27,7 +27,7 @@ export const Review = ({ formData, pdf, navigation }: any) => {
     console.log(selectedContract);
     if (selectedContract) history.push('/contract/view/' + selectedContract.uniqueIdentifer);
 
-  }, [selectedContract , history]);
+  }, [selectedContract, history]);
 
   const {
     name,
@@ -40,23 +40,37 @@ export const Review = ({ formData, pdf, navigation }: any) => {
     dispatch(createContract({ ...formData, pdf, user }))
   }
   return (
-    <Container maxWidth='sm'>
-      <h3>Review</h3>
-      <RenderAccordion summary="contractData" go={go} details={[
+    <Container style={{
+      width : '330px',
+      textAlign : 'center'
+    }} >
+      <h3 style={{
+        textAlign: 'center',
+        color: 'rgb(0, 139, 255)',
+      }}  >Review</h3>
+      <RenderAccordion summary="Info" go={go} details={[
         { 'Name': name },
         { 'Phone': phone },
         { 'Email': email },
         { 'Address': address },
         { 'Rent Amount': rentAmount },
       ]} />
-      <Button
-        color="primary"
-        variant="contained"
-        style={{ marginTop: '1.5rem' }}
-        onClick={handelSubmit}
-      >
-        Submit
+      <div style={{
+        textAlign: 'center',
+      }} >
+        <Button
+          color="primary"
+          variant="contained"
+          style={{
+            backgroundColor: "#008bff",
+            color: "#fff",
+            marginTop: '10px',
+          }}
+          onClick={handelSubmit}
+        >
+          Submit
       </Button>
+      </div>
 
     </Container>
   );
